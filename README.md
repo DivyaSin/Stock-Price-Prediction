@@ -1,7 +1,6 @@
 # Stock-Price-Prediction
-Objective:
 The objective of this lab is to create a streaming data pipeline using Apache Spark and Apache Kafka in which future stock prices are predicted based on historical data. Your goal is to get the "plumbing" correct – not to accurately predict a stock price!
-Data:
+
 We will be using historical financial data from Yahoo! Finance. You can work with whichever stocks you want for the purpose of developing and testing your lab. In order to get all historical daily stock data for Apple from 2012 to present, for example, you type the following command in a terminal window on your sandbox:
  
 $ wget http://ichart.yahoo.com/table.csv\?s=AAPL\&a=0\&b=1\&c=2012\&d=11\&e=31\&f=2017
@@ -43,8 +42,7 @@ The JSON producer record must conform to the following sample: 
 }
 
 The syntax for running the Spark application is given below:
-/opt/mapr/spark/spark-2.0.1/bin/spark-submit --class Lab2.StockSparkApp \
-CS185-jar-with-dependencies.jar localhost:9092 local[2] prices stats mycg 5000
+/opt/mapr/spark/spark-2.0.1/bin/spark-submit --class Lab2.StockSparkApp CS185-jar-with-dependencies.jar localhost:9092 local[2] prices stats mycg 5000
  
 Standalone Kafka Consumer:
 
@@ -56,8 +54,7 @@ Then when calculating the delta percentage (difference between the previous aggr
  
 (currentAggregatedStatistic – previousAggregatedStatistic) / ( 100 * meanVolume)
  
-You must consider positive, negative, and zero values above to formulate the right plan to buy, sell, or hold.
-Your consumer must output to the screen a line for each batch of records it gets from the Kafka topic using the following format:
+You must consider positive, negative, and zero values above to formulate the right plan to buy, sell, or hold. Your consumer must output to the screen a line for each batch of records it gets from the Kafka topic using the following format:
 lastTimestamp,stockSymbol,lastClose,deltaPercentage,position
  
 Here's a sample of output using 0.01 percent as the threshold:
