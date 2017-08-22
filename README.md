@@ -14,6 +14,7 @@ Note that the data is provided from most to least recent, so you will need to re
 $ sed -n '1!G;h;$p' <input-file> > <output-file>
  
 Standalone Kafka Producer:
+
 Implement the TODO's in the StockProducer.java source code provided for this lab. The JSON producer record must conform to the following sample:
  
 {
@@ -24,26 +25,11 @@ Implement the TODO's in the StockProducer.java source code provided for this lab
 "close":28.6,
 "volume":23294900
 }
+
 The syntax for running the standalone Java Kafka producer is given below:
-java -cp CS185-jar-with-dependencies.jar Lab2.StockProducer localhost:9092 DATA/orcl.csv \
-orcl prices 1000
+java -cp CS185-jar-with-dependencies.jar Lab2.StockProducer localhost:9092 DATA/orcl.csv orcl prices 1000
  
-Spark Streaming Application
-Implement the TODO's in the StockSparkApp.java source code provided for this lab.
- 
-NOTE: If you have not done so already, install the mapr-spark package on your sandbox.  As the root user, run the following commands:
-# vi /etc/yum.repos.d/mapr-eco.repo
---> change line containing baseurl to be equal to following:
-baseurl=http://package.mapr.com/releases/MEP/MEP-2.0.0/redhat
- 
-Save the file and then run the following commands:
-# yum remove mapr-spark
-# yum clean all
-# yum install mapr-spark
- 
- 
-Verify that the  version installed is 2.0.1 so it agrees with the Kafka API we specified in pom.xml:
-# rpm -qa | grep mapr-spark
+Spark Streaming Application:
  
 The JSON producer record must conform to the following sample: 
 {
@@ -55,11 +41,13 @@ The JSON producer record must conform to the following sample: 
 "meanVolume":2.415158E7,
 "lastClose":32.34
 }
+
 The syntax for running the Spark application is given below:
 /opt/mapr/spark/spark-2.0.1/bin/spark-submit --class Lab2.StockSparkApp \
 CS185-jar-with-dependencies.jar localhost:9092 local[2] prices stats mycg 5000
  
 Standalone Kafka Consumer:
+
 Implement the TODO's in the StockConsumer.java source code provided for this lab. The value of the "aggregated statistic" metric is calculated as follows:
  
 meanVolume * (meanHigh + meanLow + meanOpen + meanClose) / 4.0
@@ -80,6 +68,6 @@ Here's a sample of output using 0.01 percent as the threshold:
 2014-06-09,orcl,42.700001,-0.047328194260115676,buy
  
 Note when the delta percentage is positive and greater than the threshold, we recommend "sell".  When delta percentage is negative and absolute value is greater than the threshold, we recommend "buy".
+
 The syntax for running the standalone Java Kafka consumer is given below:
-java -cp CS185-jar-with-dependencies.jar Lab2.StockConsumer localhost:9092 \
-stats orcl mygroup 0.01
+java -cp CS185-jar-with-dependencies.jar Lab2.StockConsumer localhost:9092 stats orcl mygroup 0.01
